@@ -3,16 +3,13 @@
 
 pipeline {
   agent any
-
   stages {
-
     stage('Build Artifact - Maven') {
       steps {
         sh "mvn clean package -DskipTests=true"
         archive 'target/*.jar'
       }
     }
-
     stage('Unit Tests - JUnit and Jacoco') {
       steps {
         sh "mvn test"
@@ -24,7 +21,6 @@ pipeline {
         }
       }
     }
-
     stage('Docker Build and Push') {
       steps {
         withDockerRegistry([credentialsId: "docker-myregistry-cred", url: "https://myregistry.def.local:5000"]) {
